@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  neo4jserver:
+    image: neo4j:5
+    container_name: neo4jserver
+    environment:
+      - NEO4J_AUTH=neo4j/080499Good
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+
+  api:
+    build: .
+    container_name: api-neo4j
+    environment:
+      - PORT=3000
+      - NEO4J_URI=bolt://neo4jserver:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=080499Good
+    ports:
+      - "3000:3000"
+    depends_on:
+      - neo4jserver

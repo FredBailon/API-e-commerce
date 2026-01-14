@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laboratorio E-commerce Neo4j – Frontend</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-main">
+      <div class="brand">
+        <span class="brand-logo">🛒</span>
+        <div>
+          <h1>NeoShop</h1>
+          <p>E-commerce demo sobre Neo4j</p>
+        </div>
+      </div>
+      <form id="form-buscar-productos" class="search-bar">
+        <input
+          type="text"
+          name="nombre"
+          placeholder="Buscar productos (usa /buscar-productos)"
+        />
+        <button type="submit">Buscar</button>
+      </form>
+    </div>
+    <div class="header-sub">
+      <span>API base: <code id="api-base-label"></code></span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card catalog">
+      <div class="card-header">
+        <h2>Catálogo de productos</h2>
+        <span class="tag">GET /productos</span>
+      </div>
+      <p class="card-help">
+        Vista tipo tienda: se listan los productos devueltos por el backend. 
+        La búsqueda principal usa el endpoint seguro de consulta por nombre y este listado el de todos los productos.
+      </p>
+      <button id="btn-cargar-productos" class="btn-secondary">Cargar catálogo</button>
+      <div id="grid-productos" class="grid-productos"></div>
+      <pre id="debug-productos" class="resultado resultado--small"></pre>
+    </section>
+
+    <section class="card side-panel">
+      <div class="card-header">
+        <h2>Panel de usuario</h2>
+        <span class="tag tag--warning">Endpoints inseguros</span>
+      </div>
+
+      <div class="panel-block">
+        <h3>Login (demo)</h3>
+        <p class="card-help">Usa el endpoint login-inseguro para simular un inicio de sesión.</p>
+        <form id="form-login-inseguro">
+          <label>
+            Password
+            <input type="password" name="password" placeholder="Password de ejemplo" required />
+          </label>
+          <button type="submit">Iniciar sesión</button>
+        </form>
+        <pre id="resultado-login-inseguro" class="resultado"></pre>
+      </div>
+
+      <div class="panel-block">
+        <h3>Buscar usuarios</h3>
+        <p class="card-help">Busca usuarios por nombre con el endpoint buscar-usuarios-inseguro.</p>
+        <form id="form-buscar-usuarios">
+          <label>
+            Nombre de usuario
+            <input type="text" name="nombre" placeholder="Ej: Ana" required />
+          </label>
+          <button type="submit">Buscar usuario</button>
+        </form>
+        <pre id="resultado-buscar-usuarios" class="resultado"></pre>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Laboratorio académico de inyección en Cypher (solo entorno controlado).</span>
+    <span>Frontend por Neo4j E-commerce Demo</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

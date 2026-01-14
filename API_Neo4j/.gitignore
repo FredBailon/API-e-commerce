@@ -33,3 +33,12 @@ build/
 
 # Docker (dejamos los archivos principales tracked)
 .docker/
+
+# ---- Proyecto API Neo4j / Frontend ----
+# Datos de Neo4j montados como volumen (si los usas)
+neo4j_data/
+
+# No ignorar código del frontend ni archivos de configuración
+!frontend/
+!Dockerfile
+!docker-compose.yml

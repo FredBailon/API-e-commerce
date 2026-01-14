@@ -1,10 +1,16 @@
 const express = require('express');
+const cors = require('cors');
 const neo4j = require('neo4j-driver');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+// Habilitar CORS para permitir peticiones desde el frontend (origen file:// o cualquier origen)
+app.use(cors());
+
+// Servir el frontend estático desde la carpeta "frontend"
+app.use(express.static('frontend'));
 
 const uri = process.env.NEO4J_URI || 'bolt://neo4jserver:7687';
 const user = process.env.NEO4J_USER || 'neo4j';
@@ -299,6 +305,34 @@ app.delete('/pedidos/:id', async (req, res) => {
   try {
     await runQuery(cypher, { id });
     res.status(204).send();
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Endpoints adicionales vulnerables para laboratorio de Cypher Injection
+
+// Búsqueda insegura de usuarios por nombre (basado en label Usuario)
+app.get('/buscar-usuarios-inseguro', async (req, res) => {
+  const nombre = req.query.nombre || '';
+  const cypher = `MATCH (u:Usuario) WHERE u.nombre = '${nombre}' RETURN u`;
+
+  try {
+    const data = await runQuery(cypher);
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Login inseguro sobre la colección de usuarios de e-commerce
+app.get('/login-inseguro', async (req, res) => {
+  const password = req.query.password || '';
+  const cypher = `MATCH (u:Usuario) WHERE u.email = "ana@correo.com" AND u.password = '${password}' RETURN u`;
+
+  try {
+    const data = await runQuery(cypher);
+    res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

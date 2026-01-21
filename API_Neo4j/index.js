@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 const neo4j = require('neo4j-driver');
 
 const app = express();
@@ -11,6 +13,9 @@ app.use(cors());
 
 // Servir el frontend estático desde la carpeta "frontend"
 app.use(express.static('frontend'));
+
+// Documentación Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const uri = process.env.NEO4J_URI || 'bolt://neo4jserver:7687';
 const user = process.env.NEO4J_USER || 'neo4j';

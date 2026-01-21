@@ -42,3 +42,5 @@ neo4j_data/
 !frontend/
 !Dockerfile
 !docker-compose.yml
+!swagger.json
+!package-lock.json
